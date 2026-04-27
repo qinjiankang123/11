@@ -1,4 +1,4 @@
-import os
+import os  # 确保这行在最上面
 from fastapi import FastAPI, staticfiles
 from pydantic import BaseModel
 from openai import OpenAI
@@ -27,3 +27,12 @@ async def chat(msg: ChatMessage):
 @app.get("/")
 async def root():
     return {"message": "https://你的域名.static/index.html"}
+
+# ==================================================
+# === 以下是新增的代码，请复制粘贴到文件最底部 ===
+# ==================================================
+if __name__ == "__main__":
+    import uvicorn
+    # 读取环境变量里的 PORT，如果读不到（比如在本地运行），就用 8080
+    port = int(os.environ.get("PORT", 8080))
+    uvicorn.run(app, host="0.0.0.0", port=port)
